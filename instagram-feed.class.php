@@ -8,7 +8,7 @@ class InstagramFeed {
 
     var $feedItems;
 
-    var $cachePath = "/tmp/";
+    var $cachePath;
     var $cacheFile;
     var $cacheTime;
     var $cacheForce;
@@ -26,6 +26,10 @@ class InstagramFeed {
             // return error...
         }
         // ...
+
+        $_addr = $_SERVER['REMOTE_ADDR'];
+        $_ips = ['127.0.0.1', '::1'];
+        $this->cachePath = (in_array($_addr, $_ips)) ? "./tmp/" : "/tmp/";
 
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>...</title>
+<style>
+html {
+    line-height: 1;
+	text-size-adjust: 100%;
+	box-sizing: border-box;
+	font-size: 62.5%;
+	tab-size: 4;
+	word-break: break-word;
+    cursor: default;
+}
+body {
+    font-family: sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+    line-height: 1.6;
+    background: #f4f5f6;
+    color: #333;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+	background-repeat: no-repeat;
+}
+a {
+    color: #07a;
+    text-decoration: none;
+}
+ul {
+    max-width: 92rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+li {
+    flex : 1 1 50%;
+    margin: 0;
+    padding: 2rem 1rem 2rem;
+    display: flex;
+    flex-flow: row wrap;
+}
+img {
+    display: block;
+    max-width: 100%;
+    float: left;
+    box-shadow: 0 0 0 5px #fff, 0 10px 20px -5px rgba(0, 0, 0, .25);
+}
+figure {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+figure > a {
+    flex: 0 0 160px;
+}
+figure > figcaption {
+    flex: 1 1 auto;
+    padding: 0 0 0 2rem;
+}
+p {
+    margin: 0 0 .5rem;
+    padding: 0;
+}
+
+@media all and ( max-width : 800px) {
+    li { flex: 0 0 100% }
+    figure > a { flex: 0 0 120px }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+    <ul>
+        <li v-for="item in instagramFeed">
+            <figure>
+                <a :href="item.link" target="_blank"><img :src="item.thumb" :alt="item.alt" /></a>
+                <figcaption>
+                    <p><a :href="item.link" target="_blank"><strong>{{ item.timestamp | formatDate }}</strong></a></p>
+                    <p v-html="instaFormat(item.caption)"></p>
+                </figcaption>
+            </figure>
+        </li>
+    </ul>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script>
+function xhr(url, success, error) {
+    let _xhr = new XMLHttpRequest();
+        _xhr.overrideMimeType('application/json');
+        _xhr.open('GET', url, true);
+        _xhr.onreadystatechange = function() {
+            if (_xhr.readyState === 4 && _xhr.status == "200") {
+                success(_xhr.responseText);
+            } else {
+                if (typeof(error) === 'function') error();
+            }
+        }
+    _xhr.send();
+}
+
+const Data = { instagramFeed : [] }
+const App = new Vue({
+    el: '#app',
+    data () { return Data },
+    filters : {
+        formatDate(value) {
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZoneName : "short" };
+            var date  = new Date(value*1000);
+            return date.toLocaleDateString("en-US", options);
+        }
+    },
+    methods : {
+        instaFormat(str) {
+            let length = 220;
+            let end = '...';
+            let output = (str.length > length)
+                ? str.substring(0, length - end.length) + end
+                : str;
+
+            output = output.replace(/\n/gi, '<br />');
+            output = output.replace(/#\w+/gi, function(i) {
+                return `<a href="https://www.instagram.com/explore/tags/${i.substring(1)}/" title="${i}" target="_blank">${i}</a>`;
+            }).trim();
+
+            output = output.replace(/@\w+/gi, function(i) {
+                return `<a href="https://www.instagram.com/${i.substring(1)}/" title="${i}" target="_blank">${i}</a>`;
+            }).trim();
+
+
+            return output;
+        }
+    },
+    created() {
+        xhr('index.php',
+            function(data) { Data.instagramFeed = JSON.parse(data).slice(0,10) },
+            function() {}
+        );
+    }
+})
+</script>
+</body>
+</html>
