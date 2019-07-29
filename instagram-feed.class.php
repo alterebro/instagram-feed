@@ -8,7 +8,7 @@ class InstagramFeed {
 
     var $feedItems;
 
-    var $cachePath = './tmp/';
+    var $cachePath = "/tmp/";
     var $cacheFile;
     var $cacheTime;
     var $cacheForce;
