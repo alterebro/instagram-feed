@@ -134,12 +134,11 @@ const App = new Vue({
                 return `<a href="https://www.instagram.com/${i.substring(1)}/" title="${i}" target="_blank">${i}</a>`;
             }).trim();
 
-
             return output;
         }
     },
     created() {
-        xhr('index.php',
+        xhr('feed.php',
             function(data) { Data.instagramFeed = JSON.parse(data).slice(0,10) },
             function() {}
         );

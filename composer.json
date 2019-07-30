@@ -1,0 +1,12 @@
+{
+    "name": "alterebro/instagram-feed",
+    "description": "Access latest Instagram posts without using oAuth, token or API",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jorge Moreno",
+            "email": "alterebro@gmail.com"
+        }
+    ]
+}

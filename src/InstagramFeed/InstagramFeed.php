@@ -1,17 +1,18 @@
 <?php
+
+namespace Alterebro\InstagramFeed;
+
 class InstagramFeed {
 
     var $host = "https://www.instagram.com/";
     var $url;
     var $queryString;
     var $query;
-
-    var $feedItems;
-
-    var $cachePath;
     var $cacheFile;
-    var $cacheTime;
-    var $cacheForce;
+    var $cachePath = "./tmp/";
+    var $cacheTime = 86400;
+    var $cacheForce = false;
+    var $feedItems = 10;
 
     function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
 
@@ -25,11 +26,9 @@ class InstagramFeed {
         if( !in_array($this->query, $allowed_queries) ) {
             // return error...
         }
-        // ...
 
-        $_addr = $_SERVER['REMOTE_ADDR'];
-        $_ips = ['127.0.0.1', '::1'];
-        $this->cachePath = (in_array($_addr, $_ips)) ? "./tmp/" : "/tmp/";
+        // TODO : Find something better for this...
+        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? "./tmp/" : "/tmp/";
 
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
@@ -114,6 +113,11 @@ class InstagramFeed {
                 : $this->readCache();
 
     }
-}
 
-?>
+    function JSON() {
+
+        header('Content-type:application/json;charset=utf-8');
+        echo $this->load();
+
+    }
+}
