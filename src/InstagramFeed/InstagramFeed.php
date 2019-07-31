@@ -16,28 +16,40 @@ class InstagramFeed {
 
     function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
 
-        $this->queryString = substr($query, 1);
-        $this->query = $query[0];
+        if ($query[0] == '@') {
+            // User
+            $this->query = '@';
+            $this->queryString = substr($query, 1);
+
+        } else {
+            // Hashtag
+            $this->query = '#';
+            $this->queryString = $query;
+        }
 
         $this->feedItems = $feedItems;
 
-        // TODO : handle error properly
-        $allowed_queries = ['@', '#'];
-        if( !in_array($this->query, $allowed_queries) ) {
-            // return error...
-        }
-
         // TODO : Find something better for this...
-        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? "./tmp/" : "/tmp/";
+        // $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? "./tmp/" : "/tmp/";
+        // # Fix : Make absolute path when is not localhost
+        if ( ($_SERVER['HTTP_HOST'] != 'localhost') ) {
+
+            $this->cachePath = "/tmp/";
+        }
 
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
         $this->cacheForce = $cacheForce;
 
         // If user ...
-        $this->url = $this->host . $this->queryString . '/';
+        if ( $this->query == '@' ) {
+            $this->url = $this->host . $this->queryString . '/';
+        }
 
-        // TODO : If hashtag ...
+        // If hashtag ...
+        if ( $this->query == '#' ) {
+            $this->url = $this->host . 'explore/tags/' . $this->queryString . '/';
+        }
     }
 
     function extractData($input) {
@@ -49,7 +61,9 @@ class InstagramFeed {
         $output = trim($output[0]);
         $output = json_decode($output, true);
 
-        $els = $output['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
+        if ( $this->query == '#' ) { $els = $output['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges']; }
+        if ( $this->query == '@' ) { $els = $output['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges']; }
+
         foreach ($els as $el) {
             $_el = $el['node'];
             $feed[] = [
@@ -57,8 +71,8 @@ class InstagramFeed {
                 'link' =>  $this->host . 'p/' . $_el['shortcode'] . '/',
                 'timestamp' => $_el['taken_at_timestamp'],
                 'thumb' => $_el['thumbnail_resources'][count($_el['thumbnail_resources'])-1]['src'],
-                'caption' => $_el['edge_media_to_caption']['edges'][0]['node']['text'],
-                'alt' => $_el['accessibility_caption']
+                'caption' => (isset($_el['edge_media_to_caption']['edges'][0]['node']['text'])) ? $_el['edge_media_to_caption']['edges'][0]['node']['text'] : '',
+                'alt' => (isset($_el['accessibility_caption'])) ? $_el['accessibility_caption'] : ''
             ];
         }
         $feed = array_slice($feed, 0, $this->feedItems);

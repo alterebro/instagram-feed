@@ -30,8 +30,7 @@ body {
     line-height: 1.6;
     background-color: #3f3a3c;
     background-image: linear-gradient(30deg, #343132, #3f3a3c);
-    background-attachment: fixed;
-    color: #ddd;
+    color: #e0e0e0;
 }
 *, *:before, *:after {
 	box-sizing: inherit;
@@ -57,24 +56,12 @@ a:hover img { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 1) }
 
 ul {
     margin: 2rem auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 124rem;
+    max-width: 72rem;
 }
-li {
-    padding: 2rem;
-    max-width: 62rem;
-    flex: 1 1 50%;
-}
+li { padding: 2rem }
 
-figure {
-    display: flex;
-}
-figure > a {
-    flex: 0 0 24rem;
-}
-
+figure { display: flex }
+figure > a { flex: 0 0 24rem }
 figure > figcaption {
     flex: 1 1 auto;
     padding: 0 0 0 2rem;
@@ -82,31 +69,28 @@ figure > figcaption {
 figcaption h3 {
     font-weight: 700;
     font-size: 100%;
-    margin: 0 0 .5rem;
+    margin: .5rem 0;
 }
-figcaption p {
-    margin: 0 0 .5rem;
-}
+figcaption p { margin: 0 0 .5rem }
 figcaption mark {
     background: #bf8a3c;
     color: #343132;
     display: inline;
-    padding: 1px 4px;
-    border-radius: 3px;
+    padding: 1px 5px;
+    border-radius: 2px;
 }
 
-@media all and (max-width : 1200px) {
-    ul { max-width: 72rem }
-    li {
-        max-width: 72rem;
-        flex: 0 0 100%;
+@media all and (max-width : 620px) {
+    figure {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
     }
-}
-@media all and (max-width : 640px) {
-    ul { margin: 0 auto }
-    li { padding: 1rem 1.5rem }
-    figure > a { flex: 0 0 16rem }
-    figure img { max-width: 16rem }
+    figure > a { flex: 1 1 auto }
+    figure > figcaption {
+        max-width: 32rem;
+        padding: 2rem 0 0 0;
+    }
 }
 </style>
 </head>
@@ -175,7 +159,7 @@ const App = new Vue({
         }
     },
     created() {
-        xhr('feed.php',
+        xhr('https://instagram-feed.alterebro.now.sh/feed.php?q=@alterebro',
             function(data) { Data.instagramFeed = JSON.parse(data).slice(0,10) },
             function() {}
         );
