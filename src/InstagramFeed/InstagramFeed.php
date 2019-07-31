@@ -32,10 +32,12 @@ class InstagramFeed {
         // TODO : Find something better for this...
         // $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? "./tmp/" : "/tmp/";
         // # Fix : Make absolute path when is not localhost
-        if ( ($_SERVER['HTTP_HOST'] != 'localhost') ) {
+        // if ( ($_SERVER['HTTP_HOST'] != 'localhost') ) {
+        //
+        //     $this->cachePath = "/tmp/";
+        // }
 
-            $this->cachePath = "/tmp/";
-        }
+        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/tmp/" : "/tmp/";
 
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
@@ -129,6 +131,12 @@ class InstagramFeed {
     }
 
     function JSON() {
+
+        // echo "hello!";
+        // var_dump('hello');
+        // var_dump( __ROOT__ );
+        // var_dump( $_SERVER['SCRIPT_FILENAME'] );
+        // var_dump( realpath(dirname(__FILE__)) );
 
         header('Content-type:application/json;charset=utf-8');
         echo $this->load();
