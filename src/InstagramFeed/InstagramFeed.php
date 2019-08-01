@@ -4,57 +4,35 @@ namespace Alterebro\InstagramFeed;
 
 class InstagramFeed {
 
-    var $host = "https://www.instagram.com/";
-    var $url;
-    var $queryString;
-    var $query;
-    var $cacheFile;
-    var $cachePath = "./tmp/";
-    var $cacheTime = 86400;
-    var $cacheForce = false;
-    var $feedItems = 10;
+    private $host = "https://www.instagram.com/";
 
-    function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
+    // ...
+    private $url;
+    private $queryString;
+    private $query;
+    private $cacheFile;
+    private $cachePath = "/tmp/";
+    private $cacheTime = 86400;
+    private $cacheForce = false;
+    private $feedItems = 10;
 
-        if ($query[0] == '@') {
-            // User
-            $this->query = '@';
-            $this->queryString = substr($query, 1);
+    public function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
 
-        } else {
-            // Hashtag
-            $this->query = '#';
-            $this->queryString = $query;
-        }
-
+        $this->query = ($query[0] == '@') ? '@' : '#';
+        $this->queryString = ($query[0] == '@') ? substr($query, 1) : $query;
         $this->feedItems = $feedItems;
 
-        // TODO : Find something better for this...
-        // $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? "./tmp/" : "/tmp/";
-        // # Fix : Make absolute path when is not localhost
-        // if ( ($_SERVER['HTTP_HOST'] != 'localhost') ) {
-        //
-        //     $this->cachePath = "/tmp/";
-        // }
-
         $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/tmp/" : "/tmp/";
-
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
         $this->cacheForce = $cacheForce;
 
-        // If user ...
-        if ( $this->query == '@' ) {
-            $this->url = $this->host . $this->queryString . '/';
-        }
-
-        // If hashtag ...
-        if ( $this->query == '#' ) {
-            $this->url = $this->host . 'explore/tags/' . $this->queryString . '/';
-        }
+        $this->url = ( $this->query == '@' )
+            ? $this->host . $this->queryString . '/'
+            : $this->host . 'explore/tags/' . $this->queryString . '/';
     }
 
-    function extractData($input) {
+    private function extractData($input) {
 
         $feed = [];
 
@@ -83,7 +61,7 @@ class InstagramFeed {
         return $feed;
     }
 
-    function getRemoteData() {
+    private function getRemoteData() {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -97,11 +75,11 @@ class InstagramFeed {
         return $this->extractData($data);
     }
 
-    function readCache() {
+    private function readCache() {
         return file_get_contents($this->cacheFile);
     }
 
-    function writeCache() {
+    private function writeCache() {
         $file = file_put_contents(
             $this->cacheFile,
             $this->getRemoteData()
@@ -109,37 +87,29 @@ class InstagramFeed {
         return $this->readCache();
     }
 
-    function cacheExists() {
+    private function cacheExists() {
         $file = $this->cacheFile;
         $exists = file_exists($file);
         $notEmpty = @filesize($file) > 10;
         return ($exists && $notEmpty);
     }
 
-    function cacheNeedsRenewal() {
+    private function cacheNeedsRenewal() {
         return (($this->cacheTime + filemtime($this->cacheFile)) < time());
     }
 
-    function load() {
+    public function load() {
 
         return ( !$this->cacheExists() || $this->cacheForce )
             ? $this->writeCache()
             : ( $this->cacheNeedsRenewal() )
                 ? $this->writeCache()
                 : $this->readCache();
-
     }
 
-    function JSON() {
-
-        // echo "hello!";
-        // var_dump('hello');
-        // var_dump( __ROOT__ );
-        // var_dump( $_SERVER['SCRIPT_FILENAME'] );
-        // var_dump( realpath(dirname(__FILE__)) );
+    public function JSON() {
 
         header('Content-type:application/json;charset=utf-8');
         echo $this->load();
-
     }
 }
