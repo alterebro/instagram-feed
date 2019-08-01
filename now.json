@@ -1,11 +1,11 @@
 {
     "version": 2,
     "builds": [
-        { "src": "cube/*.html", "use": "@now/static" },
+        { "src": "cube/**", "use": "@now/static" },
+        { "src": "*.html", "use": "@now/static" },
         { "src": "*.php", "use": "@juicyfx/php@canary" }
     ],
     "routes": [
-        { "src": "/", "dest": "/cube/cube.html" },
-        { "src": "/favicon.ico", "dest": "/cube/favicon.ico" }
+        { "src": "/", "dest": "/cube.html" }
     ]
 }

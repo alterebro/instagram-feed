@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Instagram Cube Feed</title>
+    <link rel="shortcut icon" href="./cube/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./cube/cube.css" />
+</head>
+<body>
+
+<div id="app">
+    <Cube inline-template>
+        <div class="cube-container">
+            <div class="cube" :style="cubeRotation">
+                <div v-for="item in instagramFeed">
+                    <a :href="item.link" target="_blank"><img :src="item.thumb" :alt="item.alt" /></a>
+                </div>
+            </div>
+            <ul>
+                <li v-for="side in cubeSides"><a href="#" @click.prevent="changeSide(side, false)">{{ side.side }}</a></li>
+                <li v-if="cubeRotate"><a href="#" @click.prevent="cubeRotate = false">[stop]</a></li>
+                <li v-else><a href="#" @click.prevent="cubeRotate = true; autoRotate()">[play]</a></li>
+            </ul>
+        </div>
+    </Cube>
+</div>
+
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script charset="utf-8" src="./cube/cube.js"></script>
+</body>
+</html>
