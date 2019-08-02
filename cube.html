@@ -9,20 +9,47 @@
 <body>
 
 <div id="app">
-    <Cube inline-template>
-        <div class="cube-container">
+    <cube-head inline-template>
+        <header>
+            <h1>InstaCube</h1>
+            <p>Your Instagram Feed... in a cube!</p>
+            <form>
+                <label for="query">@</label>
+                <input type="text" id="query" />
+                <select>
+                    <option value="@">Username @</option>
+                    <option value="#">Hashtag #</option>
+                </select>
+                <input type="submit" value="Show!" />
+            </form>
+        </header>
+    </cube-head>
+    <cube inline-template>
+        <main>
             <div class="cube" :style="cubeRotation">
                 <div v-for="item in instagramFeed">
                     <a :href="item.link" target="_blank"><img :src="item.thumb" :alt="item.alt" /></a>
                 </div>
             </div>
-            <ul>
-                <li v-for="side in cubeSides"><a href="#" @click.prevent="changeSide(side, false)">{{ side.side }}</a></li>
-                <li v-if="cubeRotate"><a href="#" @click.prevent="cubeRotate = false">[stop]</a></li>
-                <li v-else><a href="#" @click.prevent="cubeRotate = true; autoRotate()">[play]</a></li>
+        </main>
+    </cube>
+    <cube-foot inline-template>
+        <footer>
+            <ul class="cube-sideselector">
+                <li v-for="side in cubeSides" :class="side.side"><button @click="changeSide(side)" :title="side.side" v-html="side.label"></button></li>
             </ul>
-        </div>
-    </Cube>
+            <ul class="cube-action">
+                <li v-if="cubeRotate"><button @click="stopRotation()" title="Pause Rotation">&#x30;</button></li>
+                <li v-else><button @click="resumeRotation()" title="Resume Rotation">&#x39;</button></li>
+                <li><button @click="zoomIn()">&#x37;</button></li>
+                <li><button @click="zoomOut()">&#x38;</button></li>
+            </ul>
+            <p>
+                Created by: <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
+                <br />Get the code : <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
+            </p>
+        </footer>
+    </cube-foot>
 </div>
 
 <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
