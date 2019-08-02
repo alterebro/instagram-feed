@@ -13,12 +13,11 @@
         <header>
             <h1>InstaCube</h1>
             <p>Your Instagram Feed... in a cube!</p>
-            <form>
-                <label for="query">@</label>
-                <input type="text" id="query" />
-                <select>
-                    <option value="@">Username @</option>
-                    <option value="#">Hashtag #</option>
+            <form @submit.prevent="requestFeed()">
+                <label for="query">{{ instagramQueryType.symbol }}</label>
+                <input type="text" id="query" v-model="instagramQuery" />
+                <select v-model="instagramQueryType">
+                    <option v-for="(type, i) in instagramQueryTypes" :value="type">{{ type.type }}</option>
                 </select>
                 <input type="submit" value="Show!" />
             </form>

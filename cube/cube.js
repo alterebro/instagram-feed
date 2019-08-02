@@ -3,6 +3,13 @@ const Store = {
     // Data
     state : {
         instagramFeed : [],
+        instagramQuery : 'alterebro',
+        instagramQueryType : null,
+        instagramQueryTypes : [
+            {type : 'Username', symbol: '@'},
+            {type : 'Hashtag', symbol: '#'}
+        ],
+
         cubeSides : [
             { side : 'left', label: '&#x31;', x : 0, y: 90 },
             { side : 'back', label: '&#x36;', x : 0, y: -180 },
@@ -19,6 +26,7 @@ const Store = {
         cubeRotateMs : 1500,
         cubeSize : 300
     },
+
     // -------
     // Methods
     changeSide : function(side, nonStop) {
@@ -49,7 +57,19 @@ const Store = {
 // Components
 const CubeHead = {
     data: function () { return Store.state },
-    name : "CubeHead"
+    name : "CubeHead",
+    methods : {
+        requestFeed : function() {
+            console.log(
+                'Requesting Feed!',
+                this.instagramQueryType.type.toLowerCase(),
+                ':', this.instagramQuery
+            );
+        }
+    },
+    created() {
+        Store.state.instagramQueryType = Store.state.instagramQueryTypes[0];
+    }
 }
 const Cube = {
     data: function () { return Store.state },
