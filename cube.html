@@ -16,7 +16,7 @@
 <div id="app">
     <cube-head inline-template>
         <header>
-            <h1><a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube</a></h1>
+            <h1><span class="icon icon-cube"></span> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube</a></h1>
             <p>Your Instagram Feed... in a Cube!</p>
             <form @submit.prevent="requestFeed()">
                 <label for="query">{{ instagramQueryType.symbol }}</label>
@@ -51,17 +51,15 @@
                 <li v-else class="lock"><button @click="unlockCubeRotation()" title="Unlock Cube Position">u</button></li>
             </ul>
             <p>
-                Created by: <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
-                <br />Get the code : <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
+                <span class="icon icon-twitter"></span> Created by: <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
+                <br /><span class="icon icon-github"></span>  Code Repo : <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
             </p>
         </footer>
     </cube-foot>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
-<!-- <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 <script charset="utf-8" src="./cube/cube.js"></script>
 </body>
 </html>

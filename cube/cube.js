@@ -139,8 +139,11 @@ const App = new Vue({
         CubeHead
     },
     created : function() {
-        Store.state.cubeSideCurrent = Store.state.cubeSides[0];
+        let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        Store.state.cubeSize = Math.floor(Math.min(w, h) / 2);
         Store.setCubeSize();
         Store.getInstagramFeed();
+        Store.state.cubeSideCurrent = Store.state.cubeSides[0];
     }
 });

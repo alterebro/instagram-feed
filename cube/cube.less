@@ -59,7 +59,6 @@ a {
 }
 
 header, footer {
-    // box-shadow: inset 0 0 0 2px #333;
     padding: 2rem;
     text-align: center;
 }
@@ -106,9 +105,29 @@ main {
     }
 }
 
-.icon() {
+.icon {
     font-family: "smiley";
+
 }
+span.icon {
+    display: inline-block;
+    padding: 0 3px;
+}
+.icon-pause:before { content: '\30'; } /* '0' */
+.icon-left-thin:before { content: '\31'; } /* '1' */
+.icon-right-thin:before { content: '\32'; } /* '2' */
+.icon-up-thin:before { content: '\33'; } /* '3' */
+.icon-down-thin:before { content: '\34'; } /* '4' */
+.icon-level-down:before { content: '\35'; } /* '5' */
+.icon-level-up:before { content: '\36'; } /* '6' */
+.icon-zoom-in:before { content: '\37'; } /* '7' */
+.icon-zoom-out:before { content: '\38'; } /* '8' */
+.icon-play:before { content: '\39'; } /* '9' */
+.icon-cube:before { content: '\63'; } /* 'c' */
+.icon-github:before { content: '\67'; } /* 'g' */
+.icon-lock:before { content: '\6c'; } /* 'l' */
+.icon-twitter:before { content: '\74'; } /* 't' */
+.icon-lock-open:before { content: '\75'; } /* 'u' */
 
 footer {
     text-align: center;
