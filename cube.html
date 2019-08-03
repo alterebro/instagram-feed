@@ -16,7 +16,7 @@
 <div id="app">
     <cube-head inline-template>
         <header>
-            <h1><span class="icon icon-cube"></span> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube :</a></h1>
+            <h1><i class="icon icon-cube"></i> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube :</a></h1>
             <p>Your Instagram Feed... <em>in a Cube!</em></p>
             <form @submit.prevent="requestFeed()">
                 <label for="query">{{ instagramQueryType.symbol }}</label>
@@ -51,8 +51,8 @@
                 <li v-else class="lock"><button @click="unlockCubeRotation()" title="Unlock Cube Position">u</button></li>
             </ul>
             <p>
-                <span class="icon icon-twitter"></span> Created by: <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
-                <br /><span class="icon icon-github"></span>  Code Repo : <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
+                <i class="icon icon-twitter"></i> <span>Created by:</span> <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
+                <br /><i class="icon icon-github"></i> <span>Code Repo:</span> <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
             </p>
         </footer>
     </cube-foot>

@@ -1,3 +1,12 @@
+// --------------------------------------------
+// Variables @less
+@mobile-breakpoint 		: 640;
+
+// --------------------------------------------
+// Media Queries
+@mobile 	: ~"all and (max-width: @{mobile-breakpoint}px)"; 	// Default
+@non-mobile : ~"all and (min-width: @{mobile-breakpoint}px)"; 	// Matchs both @tablet and @desktop
+
 @font-face {
     font-family: 'smiley';
     src: url('./font/smiley.eot?22743220');
@@ -33,6 +42,10 @@ body {
     line-height: 1.6;
     background: #f0f0f0;
     color: #323232;
+
+    @media @mobile {
+        font-size: 1.2em;
+    }
 }
 *, *:before, *:after {
 	box-sizing: inherit;
@@ -70,6 +83,10 @@ header {
         display: inline-block;
         margin: 0 0 1rem 0;
     }
+
+    @media @mobile {
+        padding: 1rem;
+    }
 }
 
 header form {
@@ -88,13 +105,11 @@ header form {
     label {
         position: absolute;
         top: 0;
-        left: 0;
+        left: 10px;
         display: block;
         line-height: 30px;
         color: #07c;
         font-weight: bold;
-        display: inline-block;
-        padding: 0 5px;
     }
     input[type="text"] {
         background: #fff;
@@ -119,12 +134,25 @@ header form {
         padding: 0 2rem;
         box-shadow: 0 5px 15px -10px rgba(0, 0, 0, .25);
     }
+
+    @media @mobile {
+        select {
+            margin: 0 .5rem;
+        }
+        input[type="submit"] {
+            padding: 0 1rem;
+        }
+    }
 }
 
 footer {
     text-align: center;
-    padding: 2rem 2rem 2rem;
+    padding: 2rem;
     width: 100%;
+
+    @media @mobile {
+        padding: 1rem;
+    }
 }
 main {
     transition: all .5s;
@@ -173,9 +201,10 @@ main {
     font-family: "smiley";
 
 }
-span.icon {
+i.icon {
     display: inline-block;
     padding: 0 3px;
+    font-style: normal;
 }
 // .icon-pause:before { content: '\30'; } /* '0' */
 // .icon-left-thin:before { content: '\31'; } /* '1' */
@@ -194,8 +223,16 @@ span.icon {
 // .icon-lock-open:before { content: '\75'; } /* 'u' */
 
 footer {
-    // text-align: center;
-    li, button, span { .icon() }
+
+    li, button { .icon() }
+
+    @media @mobile {
+        text-align: left;
+        padding: 0 1rem 1rem 5rem;
+        p span {
+            display: none;
+        }
+    }
 
     ul {
         margin: 0 auto;
@@ -219,12 +256,12 @@ footer {
                 color: #07c;
                 transition: all .35s;
 
-                &:hover {
-                    color: #000;
-                }
-                &:focus, &:active {
-                    // outline: solid #07c 1px;
-                    outline: none;
+                &:hover { color: #000 }
+                &:focus, &:active { outline: none }
+
+                @media @mobile {
+                    width: 2.6rem;
+                    height: 2.6rem;
                 }
             }
             &.active {
@@ -236,6 +273,7 @@ footer {
             }
         }
     }
+
 }
 
 ul.cube-action {
@@ -269,5 +307,21 @@ ul.cube-sideselector {
         &.right { grid-area: right; }
         &.bottom { grid-area: bottom; }
         &.lock { grid-area: lock; }
+    }
+}
+
+@media @mobile {
+    ul.cube-action {
+        bottom: 1rem;
+        left: 1rem;
+        height: 11.9rem;
+        width: 2.6rem;
+    }
+
+    ul.cube-sideselector {
+        bottom: 1rem;
+        right: 1rem;
+        width: 11.9;
+        height: 8.8rem;
     }
 }
