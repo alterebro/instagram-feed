@@ -16,8 +16,8 @@
 <div id="app">
     <cube-head inline-template>
         <header>
-            <h1>InstaCube</h1>
-            <p>Your Instagram Feed... in a cube!</p>
+            <h1><a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube</a></h1>
+            <p>Your Instagram Feed... in a Cube!</p>
             <form @submit.prevent="requestFeed()">
                 <label for="query">{{ instagramQueryType.symbol }}</label>
                 <input type="text" id="query" v-model="instagramQuery" />
@@ -40,7 +40,7 @@
     <cube-foot inline-template>
         <footer>
             <ul class="cube-sideselector">
-                <li v-for="side in cubeSides" :class="side.side"><button @click="changeSide(side)" :title="side.side" v-html="side.label"></button></li>
+                <li v-for="side in cubeSides" :class="[side.side, { active : (side.side == cubeSideCurrent.side) }]"><button @click="changeSide(side)" :title="side.side" v-html="side.label"></button></li>
             </ul>
             <ul class="cube-action">
                 <li v-if="cubeRotate"><button @click="stopRotation()" title="Pause Rotation">&#x30;</button></li>

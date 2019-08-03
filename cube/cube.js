@@ -1,5 +1,9 @@
 const Store = {
     // -------
+    // Consttants
+    feedURL : 'feed.php',
+
+    // -------
     // Data
     state : {
         instagramFeed : [],
@@ -18,12 +22,14 @@ const Store = {
             { side : 'front', label: '&#x35;', x : 0, y: 0 },
             { side : 'right', label: '&#x32;', x : 0, y: -90 },
         ],
+        cubeSideCurrent : null,
         cubeRotation : {
             transform: `translateZ(-2400px) rotateX(0deg) rotateY(0deg)`,
         },
         cubeRotate : true,
         cubeRotateId : null,
         cubeRotateMs : 1500,
+        cubeRotationSwing : 25,
         cubeSize : 300
     },
 
@@ -35,21 +41,37 @@ const Store = {
             this.state.cubeRotate = false;
             this.state.cubeRotateId = null;
         }
-        let x = side.x + ((Math.random()*40) - 20);
-        let y = side.y + ((Math.random()*40) - 20);
+        let x = side.x + ((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
+        let y = side.y + ((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
         this.state.cubeRotation.transform = `translateZ(-${this.state.cubeSize/2}px) rotateX(${x}deg) rotateY(${y}deg)`;
+        this.state.cubeSideCurrent = side;
     },
     autoRotate : function() {
         if ( this.state.cubeRotate ) {
             let _randomSide = Math.floor(Math.random()*this.state.cubeSides.length);
             this.changeSide(this.state.cubeSides[_randomSide], true);
             this.state.cubeRotateId = window.setTimeout( () => {
-                Store.autoRotate()
+                this.autoRotate()
             }, this.state.cubeRotateMs);
         }
     },
     setCubeSize : function() {
-        document.documentElement.style.setProperty('--cube-size', `${Store.state.cubeSize}px`);
+        document.documentElement.style.setProperty('--cube-size', `${this.state.cubeSize}px`);
+    },
+    getInstagramFeed : function() {
+
+        let _xhr = new XMLHttpRequest();
+            _xhr.overrideMimeType('application/json');
+            _xhr.open('GET', 'feed.php', true);
+            _xhr.onreadystatechange = () => {
+                if (_xhr.readyState === 4 && _xhr.status == "200") {
+                    this.state.instagramFeed = JSON.parse(_xhr.responseText).slice(0,6);
+                    this.autoRotate();
+                } else {
+                    this.state.instagramFeed = [];
+                }
+            }
+        _xhr.send();
     }
 }
 
@@ -112,17 +134,6 @@ const App = new Vue({
     created : function() {
 
         Store.setCubeSize();
-        let _xhr = new XMLHttpRequest();
-            _xhr.overrideMimeType('application/json');
-            _xhr.open('GET', 'feed.php', true);
-            _xhr.onreadystatechange = function() {
-                if (_xhr.readyState === 4 && _xhr.status == "200") {
-                    Store.state.instagramFeed = JSON.parse(_xhr.responseText).slice(0,6);
-                    Store.autoRotate();
-                } else {
-                    Store.state.instagramFeed = [];
-                }
-            }
-        _xhr.send();
+        Store.getInstagramFeed();
     }
 });
