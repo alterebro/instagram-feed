@@ -128,8 +128,8 @@ footer {
                 cursor: pointer;
                 display: block;
                 line-height: 1;
-                width: 100%;
-                height: 100%;
+                width: 30px;
+                height: 30px;
                 border: solid #333 1px;
                 border-radius: 3px;
                 margin: 0;
@@ -149,7 +149,7 @@ ul.cube-action {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    height: 100px;
+    height: 135px;
     width: 30px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
@@ -166,7 +166,7 @@ ul.cube-sideselector {
     grid-template-areas:
         ". top . ."
         "left front right back"
-        ". bottom . .";
+        ". bottom . lock";
 
     li {
         &.top { grid-area: top; }
@@ -175,5 +175,6 @@ ul.cube-sideselector {
         &.back { grid-area: back; }
         &.right { grid-area: right; }
         &.bottom { grid-area: bottom; }
+        &.lock { grid-area: lock; }
     }
 }

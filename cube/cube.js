@@ -59,7 +59,6 @@ const Store = {
         document.documentElement.style.setProperty('--cube-size', `${this.state.cubeSize}px`);
     },
     getInstagramFeed : function() {
-
         let _xhr = new XMLHttpRequest();
             _xhr.overrideMimeType('application/json');
             _xhr.open('GET', 'feed.php', true);
@@ -118,6 +117,14 @@ const CubeFoot = {
         zoomOut() {
             Store.state.cubeSize -= 30;
             Store.setCubeSize();
+        },
+        lockCubeRotation() {
+            Store.state.cubeRotationSwing = 0;
+            Store.changeSide(Store.state.cubeSideCurrent, true);
+        },
+        unlockCubeRotation() {
+            Store.state.cubeRotationSwing = 25;
+            Store.changeSide(Store.state.cubeSideCurrent, true);
         }
     }
 }
@@ -132,7 +139,7 @@ const App = new Vue({
         CubeHead
     },
     created : function() {
-
+        Store.state.cubeSideCurrent = Store.state.cubeSides[0];
         Store.setCubeSize();
         Store.getInstagramFeed();
     }

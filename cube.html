@@ -45,8 +45,10 @@
             <ul class="cube-action">
                 <li v-if="cubeRotate"><button @click="stopRotation()" title="Pause Rotation">&#x30;</button></li>
                 <li v-else><button @click="resumeRotation()" title="Resume Rotation">&#x39;</button></li>
-                <li><button @click="zoomIn()">&#x37;</button></li>
-                <li><button @click="zoomOut()">&#x38;</button></li>
+                <li><button @click="zoomIn()" title="Zoom In">&#x37;</button></li>
+                <li><button @click="zoomOut()" title="Zoom Out">&#x38;</button></li>
+                <li v-if="cubeRotationSwing" class="lock"><button @click="lockCubeRotation()" title="Lock Cube Position">l</button></li>
+                <li v-else class="lock"><button @click="unlockCubeRotation()" title="Unlock Cube Position">u</button></li>
             </ul>
             <p>
                 Created by: <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
@@ -56,7 +58,10 @@
     </cube-foot>
 </div>
 
-<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<!-- <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script> -->
 <script charset="utf-8" src="./cube/cube.js"></script>
 </body>
 </html>
