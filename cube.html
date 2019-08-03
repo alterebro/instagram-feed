@@ -16,8 +16,8 @@
 <div id="app">
     <cube-head inline-template>
         <header>
-            <h1><span class="icon icon-cube"></span> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube</a></h1>
-            <p>Your Instagram Feed... in a Cube!</p>
+            <h1><span class="icon icon-cube"></span> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube :</a></h1>
+            <p>Your Instagram Feed... <em>in a Cube!</em></p>
             <form @submit.prevent="requestFeed()">
                 <label for="query">{{ instagramQueryType.symbol }}</label>
                 <input type="text" id="query" v-model="instagramQuery" />
