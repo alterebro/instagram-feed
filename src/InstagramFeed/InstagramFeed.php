@@ -15,6 +15,7 @@ class InstagramFeed {
     private $cacheTime = 86400;
     private $cacheForce = false;
     private $feedItems = 10;
+    private $error = false;
 
     public function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
 
@@ -35,6 +36,11 @@ class InstagramFeed {
     private function extractData($input) {
 
         $feed = [];
+
+        if ( !substr_count($input, "window._sharedData = ") ) {
+            $this->error = true;
+            return $feed;
+        }
 
         $output = explode("window._sharedData = ", $input);
         $output = explode(";</script>", $output[1]);
@@ -99,6 +105,8 @@ class InstagramFeed {
     }
 
     public function load() {
+
+        if ( $this->error ) return '[{}]';
 
         return ( !$this->cacheExists() || $this->cacheForce )
             ? $this->writeCache()

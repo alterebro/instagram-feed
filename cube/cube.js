@@ -86,10 +86,13 @@ const Store = {
             _xhr.overrideMimeType('application/json');
             _xhr.open('GET', `${Store.feedURL}?q=${query}`, true);
             _xhr.onreadystatechange = () => {
-                if (_xhr.readyState === 4 && _xhr.status == "200") {
+                if (_xhr.readyState === 4 && _xhr.status == "200" && _xhr.responseText != '') {
+
                     this.state.instagramFeed = JSON.parse(_xhr.responseText).slice(0,6);
                     if ( init) { this.autoRotate() }
+
                 } else {
+
                     this.state.instagramFeed = [];
                 }
             }
