@@ -46,7 +46,7 @@ const Store = {
     // Methods
     changeSide : function(side, nonStop) {
         if ( !nonStop ) {
-            console.log(this);
+            // console.log(this);
             this.state.cubeRotate = false;
             this.state.cubeRotateId = null;
         }
@@ -80,14 +80,15 @@ const Store = {
     setCubeSize : function() {
         document.documentElement.style.setProperty('--cube-size', `${this.state.cubeSize}px`);
     },
-    getInstagramFeed : function() {
+    getInstagramFeed : function(query, init = true) {
+
         let _xhr = new XMLHttpRequest();
             _xhr.overrideMimeType('application/json');
-            _xhr.open('GET', 'feed.php', true);
+            _xhr.open('GET', `${Store.feedURL}?q=${query}`, true);
             _xhr.onreadystatechange = () => {
                 if (_xhr.readyState === 4 && _xhr.status == "200") {
                     this.state.instagramFeed = JSON.parse(_xhr.responseText).slice(0,6);
-                    this.autoRotate();
+                    if ( init) { this.autoRotate() }
                 } else {
                     this.state.instagramFeed = [];
                 }
@@ -103,11 +104,11 @@ const CubeHead = {
     name : "CubeHead",
     methods : {
         requestFeed : function() {
-            console.log(
-                'Requesting Feed!',
-                this.instagramQueryType.type.toLowerCase(),
-                ':', this.instagramQuery
-            );
+            let _q = this.instagramQuery.replace(/[^a-z0-9\._-]/gim,"").trim().substring(0, 30);
+                _q = (this.instagramQueryType.symbol == '@') ? `@${_q}` : _q;
+
+            console.log(_q);
+            Store.getInstagramFeed(_q, false);
         }
     },
     created() {
@@ -164,11 +165,8 @@ const App = new Vue({
         let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         Store.state.cubeSize = Math.floor(Math.min(w, h) / 2.5);
-
-        // Store.state.cubeSize = 200;
-
-        Store.setCubeSize();
-        Store.getInstagramFeed();
         Store.state.cubeSideCurrent = Store.state.cubeSides[0];
+        Store.setCubeSize();
+        Store.getInstagramFeed('@alterebro');
     }
 });
