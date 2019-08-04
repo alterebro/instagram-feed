@@ -67,7 +67,6 @@ const Store = {
 
         // Main (cubeContainer)
         this.state.cubeContainer.marginTop = `-${z*2}px`;
-
     },
     autoRotate : function() {
         if ( this.state.cubeRotate ) {
