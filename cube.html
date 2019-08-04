@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div id="app">
+<div id="app" v-cloak>
     <cube-head inline-template>
         <header>
             <h1><i class="icon icon-cube"></i> <a href="https://instagram-feed.alterebro.now.sh/" title="InstaCube : Your Instagram Feed in a Cube">InstaCube :</a></h1>
@@ -29,12 +29,13 @@
         </header>
     </cube-head>
     <cube inline-template>
-        <main>
+        <main :style="cubeContainer">
             <div class="cube" :style="cubeRotation">
                 <div v-for="item in instagramFeed">
                     <a :href="item.link" target="_blank"><img :src="item.thumb" :alt="item.alt" /></a>
                 </div>
             </div>
+            <div class="cube-shadow" :style="cubeShadow"></div>
         </main>
     </cube>
     <cube-foot inline-template>
@@ -51,14 +52,14 @@
                 <li v-else class="lock"><button @click="unlockCubeRotation()" title="Unlock Cube Position">u</button></li>
             </ul>
             <p>
-                <i class="icon icon-twitter"></i> <span>Created by:</span> <strong><a href="https://twitter.com/alterebro">@alterebro</a></strong>
-                <br /><i class="icon icon-github"></i> <span>Code Repo:</span> <a href="https://github.com/alterebro/instagram-feed">github.com/alterebro/instagram-feed</a>
+                <i class="icon icon-twitter"></i> <span>Created by:</span> <a href="https://twitter.com/alterebro">Jorge Moreno. <strong>@alterebro</strong></a>
+                <br /><i class="icon icon-github"></i> <span>GitHub Repo:</span> <a href="https://github.com/alterebro/instagram-feed">/alterebro/instagram-feed/</a>
             </p>
         </footer>
     </cube-foot>
 </div>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+<!-- <script charset="utf-8" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 <script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 <script charset="utf-8" src="./cube/cube.js"></script>
 </body>

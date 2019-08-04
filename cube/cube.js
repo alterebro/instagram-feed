@@ -1,6 +1,6 @@
 const Store = {
     // -------
-    // Consttants
+    // Constants
     feedURL : 'feed.php',
 
     // -------
@@ -23,14 +23,23 @@ const Store = {
             { side : 'right', label: '&#x32;', x : 0, y: -90 },
         ],
         cubeSideCurrent : null,
-        cubeRotation : {
-            transform: `translateZ(-2400px) rotateX(0deg) rotateY(0deg)`,
-        },
         cubeRotate : true,
         cubeRotateId : null,
         cubeRotateMs : 1500,
         cubeRotationSwing : 25,
-        cubeSize : 300
+        cubeSize : 300,
+
+        // Style Objects
+        cubeRotation : {
+            transform: 'translateZ(-3600px) rotateX(0deg) rotateY(0deg) translateY(500px)',
+        },
+        cubeShadow : {
+            height : '0px',
+            transform: 'translateY(0px) scale(1)'
+        },
+        cubeContainer : {
+            marginTop: '0px'
+        }
     },
 
     // -------
@@ -41,10 +50,24 @@ const Store = {
             this.state.cubeRotate = false;
             this.state.cubeRotateId = null;
         }
-        let x = side.x + ((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
-        let y = side.y + ((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
+
+        // Cube
+        let x = side.x + Math.floor((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
+        let y = side.y + Math.floor((Math.random()*(this.state.cubeRotationSwing*2)) - this.state.cubeRotationSwing);
+
         this.state.cubeRotation.transform = `translateZ(-${this.state.cubeSize/2}px) rotateX(${x}deg) rotateY(${y}deg)`;
         this.state.cubeSideCurrent = side;
+
+        // Shadow
+        let s = Math.floor(Math.random()*4)/10 + 1;
+        let h = Math.floor(this.state.cubeSize/8);
+        let z = Math.floor(Math.random()*(h*1.5));
+        this.state.cubeShadow.transform = `translateY(${z*2}px) scale(${s})`;
+        this.state.cubeShadow.height = `${h}px`;
+
+        // Main (cubeContainer)
+        this.state.cubeContainer.marginTop = `-${z*2}px`;
+
     },
     autoRotate : function() {
         if ( this.state.cubeRotate ) {
@@ -142,6 +165,9 @@ const App = new Vue({
         let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         Store.state.cubeSize = Math.floor(Math.min(w, h) / 2.5);
+
+        // Store.state.cubeSize = 200;
+
         Store.setCubeSize();
         Store.getInstagramFeed();
         Store.state.cubeSideCurrent = Store.state.cubeSides[0];

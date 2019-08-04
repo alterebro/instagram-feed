@@ -22,6 +22,7 @@
     --cube-size: 400px;
 }
 
+
 html, body, ul, li, p, h1, form, button {
     margin: 0;
     padding: 0;
@@ -55,6 +56,7 @@ body {
 html, body, #app {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 h1 {
@@ -70,6 +72,11 @@ a {
     align-items: center;
     flex-direction: column;
 }
+
+#app[v-cloak] {
+    display: none;
+}
+
 
 header {
     padding: 2rem;
@@ -159,6 +166,20 @@ main {
     width: var(--cube-size);
     height: var(--cube-size);
     perspective: ~"calc( var(--cube-size) * 2 )";
+    // border: dashed rgba(0, 0, 0, .2) 2px;
+    position: relative;
+
+    margin-top: -300px;
+}
+
+.cube-shadow {
+    position: absolute;
+    top: 100%;
+    z-index: -1;
+    width: 100%;
+    height: 10%;
+    background-image: radial-gradient(closest-side, rgba(0, 0, 0, .2), transparent);
+    transition: all .5s;
 }
 
 .cube,
@@ -254,7 +275,7 @@ footer {
                 background: #fff;
                 box-shadow: 0 5px 15px -5px rgba(0, 0, 0, .25);
                 color: #07c;
-                transition: all .35s;
+                transition: all .5s ease-in-out;
 
                 &:hover { color: #000 }
                 &:focus, &:active { outline: none }
@@ -266,9 +287,9 @@ footer {
             }
             &.active {
                 button {
-                    background: #07c;
                     color: #fff;
                     box-shadow: none;
+                    background: lighten(#07c, 25%)
                 }
             }
         }
