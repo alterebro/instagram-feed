@@ -1,9 +1,5 @@
 {
     "version": 2,
-    "builds": [
-        { "src": "cube/**", "use": "@now/static" },
-        { "src": "*.html", "use": "@now/static" }
-    ],
     "functions": {
         "*.php": {
             "runtime": "now-php"
