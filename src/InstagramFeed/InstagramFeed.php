@@ -23,7 +23,7 @@ class InstagramFeed {
         $this->queryString = ($query[0] == '@') ? substr($query, 1) : $query;
         $this->feedItems = $feedItems;
 
-        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/tmp/" : "/tmp/";
+        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/../tmp/" : "/tmp/";
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
         $this->cacheForce = $cacheForce;
