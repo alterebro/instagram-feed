@@ -2,7 +2,7 @@
     "version": 2,
     "functions": {
         "*.php": {
-            "runtime": "now-php"
+            "runtime": "now-php@0.0.9"
         }
     },
     "routes": [
