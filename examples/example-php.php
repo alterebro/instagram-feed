@@ -1,7 +1,7 @@
 <?php
 
 ob_start();
-include('../feed.php');
+include('../api/feed.php');
 $instagramFeed = ob_get_clean();
 $instagramFeed = json_decode($instagramFeed, true);
 $instagramFeed = array_slice($instagramFeed, 0, 10);

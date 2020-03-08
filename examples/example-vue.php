@@ -74,7 +74,7 @@ const App = new Vue({
         }
     },
     created() {
-        xhr('../feed.php',
+        xhr('../api/feed.php',
             function(data) { Data.instagramFeed = JSON.parse(data).slice(0,10) },
             function() {}
         );
