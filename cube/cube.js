@@ -96,9 +96,23 @@ const Store = {
                 } else {
 
                     this.state.instagramFeed = [];
+                    console.log(_xhr);
                 }
             }
-        _xhr.send();
+
+            _xhr.onload = function(l) {
+
+                console.log('Loaded', l);
+                console.log(_xhr);
+            };
+            _xhr.onerror = function(e) {
+
+                console.log('Error', e);
+                console.log(_xhr);
+
+            };
+
+        _xhr.send(null);
     }
 }
 
