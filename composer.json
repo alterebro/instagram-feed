@@ -1,12 +1,24 @@
 {
     "name": "alterebro/instagram-feed",
-    "description": "Access latest Instagram posts without using oAuth, token or API",
-    "type": "project",
+    "description": "Access the latest Instagram posts without using OAuth, Tokens or APIs",
+    "keywords": [
+        "instagram", "feed", "scraper", "hashtag"
+    ],
+    "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/alterebro/instagram-feed",
     "authors": [
         {
             "name": "Jorge Moreno",
-            "email": "alterebro@gmail.com"
+            "homepage": "https://moro.es"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "InstagramFeed\\": "src/InstagramFeed/"
+        },
+        "files": [
+            "src/InstagramFeed/InstagramFeed.php"
+        ]
+    },
 }
