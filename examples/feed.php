@@ -4,7 +4,7 @@ require_once('../src/InstagramFeed/InstagramFeed.php');
 
 use InstagramFeed\InstagramFeed;
 
-$queryParam = '@alterebro';
+$queryParam = '@alterebro'; // Default value
 $cachePath = dirname(__FILE__).'/tmp/';
 
     if ( isset($_GET['q']) && !empty($_GET['q']) ) {
@@ -14,7 +14,8 @@ $cachePath = dirname(__FILE__).'/tmp/';
         if ( count($matches) ) { $queryParam = $matches[0]; }
     }
 
-$feed = new InstagramFeed($queryParam, $cachePath);
 header("Access-Control-Allow-Origin: *");
 header("Content-type:application/json;charset=utf-8");
-echo $feed->load();
+
+$feed = new InstagramFeed($queryParam, $cachePath);
+$feed->JSON();

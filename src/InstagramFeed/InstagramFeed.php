@@ -1,6 +1,6 @@
 <?php
 
-namespace Alterebro\InstagramFeed;
+namespace InstagramFeed;
 
 class InstagramFeed {
 
@@ -11,19 +11,20 @@ class InstagramFeed {
     private $queryString;
     private $query;
     private $cacheFile;
-    private $cachePath = "/tmp/";
+    // private $cachePath = "/tmp/";
     private $cacheTime = 86400;
     private $cacheForce = false;
     private $feedItems = 10;
     private $error = false;
 
-    public function __construct($query, $feedItems = 10, $cacheTime = 86400, $cacheForce = false) {
+    public function __construct($query, $cachePath, $feedItems = 6, $cacheTime = 86400, $cacheForce = false) {
 
         $this->query = ($query[0] == '@') ? '@' : '#';
         $this->queryString = ($query[0] == '@') ? substr($query, 1) : $query;
         $this->feedItems = $feedItems;
 
-        $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/../tmp/" : "/tmp/";
+        $this->cachePath = $cachePath;
+        // $this->cachePath = ($_SERVER['HTTP_HOST'] == 'localhost') ? __ROOT__ . "/../tmp/" : "/tmp/";
         $this->cacheTime = $cacheTime;
         $this->cacheFile = $this->cachePath . $this->query . $this->queryString . '.json';
         $this->cacheForce = $cacheForce;
