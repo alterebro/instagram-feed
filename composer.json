@@ -1,9 +1,7 @@
 {
     "name": "alterebro/instagram-feed",
     "description": "Access the latest Instagram posts without using OAuth, Tokens or APIs",
-    "keywords": [
-        "instagram", "feed", "scraper", "hashtag"
-    ],
+    "keywords": [ "instagram", "feed", "scraper", "hashtag" ],
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/alterebro/instagram-feed",
@@ -13,6 +11,9 @@
             "homepage": "https://moro.es"
         }
     ],
+    "require": {
+        "php": ">=5.5.3",
+    },
     "autoload": {
         "psr-4": {
             "InstagramFeed\\": "src/InstagramFeed/"
