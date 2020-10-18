@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramFeed;
+namespace Alterebro;
 
 class InstagramFeed {
 

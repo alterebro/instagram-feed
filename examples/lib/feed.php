@@ -1,8 +1,8 @@
 <?php
 
-require_once( __DIR__ . '/../../src/InstagramFeed/InstagramFeed.php');
+require_once( __DIR__ . '/../../src/InstagramFeed.php');
 
-use InstagramFeed\InstagramFeed;
+use Alterebro\InstagramFeed;
 
 $queryParam = '@alterebro'; // Default value
 $cachePath = dirname(__FILE__).'/../tmp/';
@@ -16,9 +16,9 @@ $cachePath = dirname(__FILE__).'/../tmp/';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-type: application/json; charset=utf-8");
-ob_start("ob_gzhandler");
+// ob_start("ob_gzhandler");
 
          $feed = new InstagramFeed($queryParam, $cachePath);
     echo $feed->load();
 
-ob_end_flush();
+// ob_end_flush();
