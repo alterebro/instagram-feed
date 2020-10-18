@@ -10,7 +10,14 @@
 ### How to use it
 
 ```php
-$feed = new InstagramFeed($query, $cachePath);
+require __DIR__ . '/vendor/autoload.php';
+
+use Alterebro\InstagramFeed;
+
+$feed = new InstagramFeed(
+    $query,     // i.e: "@alterebro"
+    $cachePath  // i.e: __DIR__ . "/tmp/"
+);
 $feed->JSON();
 ```
 
