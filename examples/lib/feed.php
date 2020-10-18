@@ -15,7 +15,10 @@ $cachePath = dirname(__FILE__).'/../tmp/';
     }
 
 header("Access-Control-Allow-Origin: *");
-header("Content-type:application/json;charset=utf-8");
+header("Content-type: application/json; charset=utf-8");
+ob_start("ob_gzhandler");
 
-$feed = new InstagramFeed($queryParam, $cachePath);
-$feed->JSON();
+         $feed = new InstagramFeed($queryParam, $cachePath);
+    echo $feed->load();
+
+ob_end_flush();
