@@ -1,11 +1,11 @@
 <?php
 
-require_once('../src/InstagramFeed/InstagramFeed.php');
+require_once( __DIR__ . '/../../src/InstagramFeed/InstagramFeed.php');
 
 use InstagramFeed\InstagramFeed;
 
 $queryParam = '@alterebro'; // Default value
-$cachePath = dirname(__FILE__).'/tmp/';
+$cachePath = dirname(__FILE__).'/../tmp/';
 
     if ( isset($_GET['q']) && !empty($_GET['q']) ) {
 

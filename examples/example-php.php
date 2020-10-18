@@ -1,7 +1,7 @@
 <?php
 
 ob_start();
-require_once('feed.php');
+require_once('lib/feed.php');
 $instagramFeed = ob_get_clean();
 $instagramFeed = json_decode($instagramFeed, true);
 $instagramFeed = array_slice($instagramFeed, 0, 10);
@@ -14,7 +14,6 @@ function instaFormat($str) {
         : $str;
 
     $output = nl2br($output);
-    // $output = preg_replace('/\n/i', ' ', $output);
     $output = preg_replace('/(#\w+)/i', '<mark title="${1}">${1}</mark>', $output);
     $output = preg_replace('/(@(\w+))/i', '<a href="https://www.instagram.com/${2}/" title="${1}" target="_blank">${1}</a>', $output);
 
@@ -36,7 +35,7 @@ header('Content-Type: text/html; charset=utf-8');
     <meta name="author" content="Jorge Moreno aka moro, moro.es (@alterebro)" />
     <meta name="google" content="notranslate" />
     <link rel="me" href="https://twitter.com/alterebro" />
-    <link rel="stylesheet" href="example.css" />
+    <link rel="stylesheet" href="lib/example.css" />
 </head>
 <body>
 

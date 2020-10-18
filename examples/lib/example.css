@@ -39,14 +39,15 @@ a img {
     background: #eee;
     padding: 5px;
     box-shadow: 0 5px 25px -10px rgba(0, 0, 0, .75);
-    transition: box-shadow .35s, top .25s;
+    transition: all .25s;
     position: relative;
     top: 0;
 }
 a:hover { color: #fff }
 a:hover img {
-    box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 1);
-    top: -2px;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 1);
+    top: -5px;
+    transform: scale(1.025);
 }
 
 ul {

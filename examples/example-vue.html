@@ -7,7 +7,7 @@
     <meta name="author" content="Jorge Moreno aka moro, moro.es (@alterebro)" />
     <meta name="google" content="notranslate" />
     <link rel="me" href="https://twitter.com/alterebro" />
-    <link rel="stylesheet" href="example.css" />
+    <link rel="stylesheet" href="lib/example.css" />
 </head>
 <body>
 
@@ -61,7 +61,6 @@ const App = new Vue({
                 ? str.substring(0, length - end.length) + end
                 : str;
 
-            // output = output.replace(/\n/gi, ' ');
             output = output.replace(/\n/gi, '<br />');
             output = output.replace(/#\w+/gi, function(i) {
                 return `<mark title="${i}">${i}</mark>`;
@@ -75,7 +74,7 @@ const App = new Vue({
         }
     },
     created() {
-        xhr('feed.php',
+        xhr('lib/feed.php',
             function(data) { Data.instagramFeed = JSON.parse(data).slice(0,10) },
             function() {}
         );
