@@ -16,10 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "InstagramFeed\\": "src/InstagramFeed/"
-        },
-        "files": [
-            "src/InstagramFeed/InstagramFeed.php"
-        ]
+            "Alterebro\\": "src/"
+        }
     }
 }

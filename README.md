@@ -2,6 +2,10 @@
 
 > Get the latest pictures from an Instagram user or hashtag without OAuth credentials or access token. This is not using the Instagram API platform or Graph API so it doesn't need you to authenticate, authorise or register your application anywhere.
 
+## Installation
+
+    composer require alterebro/instagram-feed
+
 
 ### How to use it
 
@@ -27,10 +31,9 @@ $feed->JSON();
 // Retrive 10 items from user @alterebro and stores it on the /tmp/ folder for 12 hours / half day (43200 seconds)
 $feed = new InstagramFeed('@alterebro', '/tmp/', 10, 43200);
 
-// Output as JSON :
-header("Content-type:application/json;charset=utf-8");
-echo $feed->load();
+// Get the data :
+$data = $feed->load();
 
-// or :
+// or Output as JSON :
 $feed->JSON();
 ```
