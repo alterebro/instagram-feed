@@ -61,12 +61,25 @@ class InstagramFeed {
     }
 
     private function getRemoteData() {
+
+        // $agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13';
+        // $agent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1';
+        // $agent = 'curl/7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8r zlib/1.2.5';
+        // $agent = 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
+        $agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+
+        // curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        // curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+        curl_setopt($ch, CURLOPT_REFERER, 'http://www.google.com');
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
 
         $data = curl_exec($ch);
         curl_close($ch);
